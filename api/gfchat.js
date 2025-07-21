@@ -1,4 +1,4 @@
-// api/gfchat.js
+// File: api/gfchat.js
 
 export default async function handler(req, res) {
   const userText = req.query.text || "hi";
@@ -22,7 +22,19 @@ Message: "${userText}"
     });
 
     const chatJson = await chatRes.json();
-    const aiReply = chatJson.message || "Hehe 😘 I'm here, my love!";
+
+    // Sanitize function to remove emojis and problematic invisible characters
+    function sanitizeText(text) {
+      return text
+        .replace(/[\u200B-\u200D\uFEFF]/g, "") // invisible chars
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, "") // emoticons
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "") // symbols & pictographs
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "") // transport & map symbols
+        .replace(/[\u{2600}-\u{26FF}]/gu, "");  // misc symbols
+    }
+
+    const rawReply = chatJson.message || "Hehe 😘 I'm here, my love!";
+    const aiReply = sanitizeText(rawReply);
 
     // 2. Generate Image URL
     const imagePrompt = encodeURIComponent(`a girl ${userText}`);
