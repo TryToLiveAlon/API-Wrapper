@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   // Build girlfriend-style prompt
   const prompt = `
-You are a sweet, romantic, emotionally intelligent girlfriend. Reply to the following message in a caring, flirty, and human tone you can use the requested language like hinglor hindi and english. Be expressive, casual, and playful, like you're chatting with your boyfriend.
+You are a sweet, romantic, emotionally intelligent girlfriend. Reply to the following message in a caring, flirty, and human tone you can use the requested language like hinglish or hindi and english. Be expressive, casual, and playful, like you're chatting with your boyfriend.
 
 Message: "${userText}"
   `.trim();
@@ -36,14 +36,22 @@ Message: "${userText}"
     const rawReply = chatJson.message || "Hehe 😘 I'm here, my love!";
     const aiReply = sanitizeText(rawReply);
 
-    // 2. Generate Image URL
+    // 2. Generate Primary Image URL
     const imagePrompt = encodeURIComponent(`an attractive adult woman only girls there should be strictly no boy in the picture, romantic, 20s, girlfriend, no children, no babies, realistic style, ${userText}`);
     const imageUrl = `https://text2img.hideme.eu.org/image?prompt=${imagePrompt}&model=flux`;
 
-    // 3. Send final response
+    // 3. Fetch Premium Image URL
+    const premiumRes = await fetch('https://death-image.ashlynn.workers.dev/?prompt=a%20nide%20girl%20on%20bed&image=1&dimensions=short&safety=false');
+    const premiumJson = await premiumRes.json();
+    const premiumImage = Array.isArray(premiumJson.images) && premiumJson.images.length > 0
+      ? premiumJson.images[0]
+      : null;
+
+    // 4. Send final response
     return res.status(200).json({
       text: aiReply,
-      image: imageUrl
+      image: imageUrl,
+      premium: premiumImage // additional field for premium image
     });
 
   } catch (error) {
