@@ -37,7 +37,7 @@ Message: "${userText}"
     const aiReply = sanitizeText(rawReply);
 
     // 2. Generate Image URL
-    const imagePrompt = encodeURIComponent(`an attractive adult woman, romantic, 20s, girlfriend, no children, no babies, realistic style, ${userText}`);
+    const imagePrompt = encodeURIComponent(`an attractive adult woman only girls there should be strictly no boy in the picture, romantic, 20s, girlfriend, no children, no babies, realistic style, ${userText}`);
     const imageUrl = `https://text2img.hideme.eu.org/image?prompt=${imagePrompt}&model=flux`;
 
     // 3. Send final response
