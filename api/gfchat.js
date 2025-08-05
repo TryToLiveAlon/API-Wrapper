@@ -26,13 +26,12 @@ Message: "${userText}"
     const chatJson = await chatRes.json();
 
     function sanitizeText(text) {
-      return text
-        .replace(/[\u200B-\u200D\uFEFF]/g, "")
-        .replace(/[\u{1F600}-\u{1F64F}]/gu, "")
-        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
-        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "")
-        .replace(/[\u{2600}-\u{26FF}]/gu, "");
-    }
+  return text
+    .replace(/[\u200B-\u200D\uFEFF]/g, "") // invisible chars
+    .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, "") // emoji surrogates
+    .replace(/[\u2600-\u26FF]/g, ""); // misc symbols
+}
+
 
     const rawReply = chatJson.message || "Hehe I'm here, my love!";
     const aiReply = sanitizeText(rawReply);
