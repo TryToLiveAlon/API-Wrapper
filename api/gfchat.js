@@ -65,3 +65,4 @@ Message: "${userText}"
     return res.status(500).json({ error: "Failed to generate response." });
   }
 };
+      
