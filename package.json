@@ -1,20 +1,21 @@
 {
-  "name": "girlfriend-chat-api",
-  "version": "1.0.0",
-  "description": "A chat API that responds with romantic text using GPT and generates images using text2img.hideme.eu.org.",
-  "scripts": {
-    "dev": "vercel dev"
-  },
-  "keywords": [
-    "chatbot",
-    "girlfriend",
-    "api",
-    "romantic",
-    "image-generator"
-  ],
-  "author": "Suraj",
-  "license": "MIT",
-  "dependencies": {
-    "node-fetch": "^2.6.7"
-  }
+  "name": "girlfriend-chat-api",
+  "version": "1.0.0",
+  "description": "A chat API that responds with romantic text using GPT and generates images using text2img.hideme.eu.org.",
+  "main": "api/gfchat.js",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "keywords": [
+    "chatbot",
+    "girlfriend",
+    "api",
+    "romantic",
+    "image-generator"
+  ],
+  "author": "YourName",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
 }
