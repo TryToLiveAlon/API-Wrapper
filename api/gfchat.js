@@ -1,8 +1,6 @@
-// File: api/gfchat.js
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const fetch = require("node-fetch"); // Optional: if needed on older Node versions
-
-module.exports = async function handler(req, res) {
+module.exports = async function (req, res) {
   const userText = req.query.text || "hi";
 
   if (typeof userText !== 'string' || userText.length > 200) {
@@ -34,6 +32,24 @@ Message: "${userText}"
         .replace(/[\u{1F300}-\u{1F5FF}]/gu, "")
         .replace(/[\u{1F680}-\u{1F6FF}]/gu, "")
         .replace(/[\u{2600}-\u{26FF}]/gu, "");
+    }
+
+    const rawReply = chatJson.message || "Hehe I'm here, my love!";
+    const aiReply = sanitizeText(rawReply);
+
+    const imagePrompt = encodeURIComponent(`an attractive adult woman only girls there should be strictly no boy in the picture, romantic, 20s, girlfriend, no children, no babies, realistic style, ${userText}`);
+    const imageUrl = `https://text2img.hideme.eu.org/image?prompt=${imagePrompt}&model=flux`;
+
+    const premiumRes = await fetch(`https://death-image.ashlynn.workers.dev/generate?prompt=${imagePrompt}&image=2&dimensions=16:9&safety=false&steps=8`);
+    const premiumJson = await premiumRes.json();
+    const premiumImage = Array.isArray(premiumJson.images) && premiumJson.images.length > 0
+      ? premiumJson.images[0]
+      : null;
+
+    return res.status(200).json({
+      text: aiReply,
+      image: imageUrl,
+      premiu
     }
 
     const rawReply = chatJson.message || "Hehe I'm here, my love!";
