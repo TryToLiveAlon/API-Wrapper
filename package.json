@@ -12,7 +12,7 @@
     "romantic",
     "image-generator"
   ],
-  "author": "YourName",
+  "author": "Suraj",
   "license": "MIT",
   "dependencies": {
     "node-fetch": "^2.6.7"
