@@ -3,6 +3,10 @@
     {
       "src": "/api/gfchat",
       "dest": "/api/gfchat.js"
+    },
+    {
+      "src": "/api/check",
+      "dest": "/api/check.js"
     }
   ]
 }
